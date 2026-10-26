@@ -5,8 +5,13 @@ import matplotlib.image as mpimg
 from Semester26_Model import  predict_price
 
 def draw_the_map():
+
     ax_map.cla()
+    img = mpimg.imread(f"Semester26_{current_map}.jpg")
     ax_map.imshow(img, extent=(0, 100, 0, 100), aspect='auto')
+
+    fig.suptitle(f"Hus priser {current_map} (per m2)", fontsize=20, y=0.98, x=0.63)
+
     x,y = marked_point
     ax_map.scatter(x, y, marker='+', c='blue', s=200)
     print(f"marked_point: {marked_point}")
@@ -26,6 +31,13 @@ def draw_the_map():
 
     plt.draw()
 
+
+
+def on_map_type(key):
+    global current_map
+    current_map = maps[key]
+    draw_the_map()
+
 def on_click_map(event) :
     global marked_point
     if event.inaxes != ax_map:
@@ -44,6 +56,12 @@ def on_standard(key):
     standard_type = standard_types[key]
     draw_the_map()
 
+maps = {
+    'Bergen': 'Bergen',
+    'Stavanger': 'Stavanger',
+    'Oslo': 'Oslo'
+}
+
 house_types = {
     'Enebolig': 1,
     'Rekke': 2,
@@ -61,26 +79,30 @@ standard_type = 1
 m2 = 100
 marked_point = (43,57)
 
+current_map = maps['Bergen']
+
 # Create the figures
-fig = plt.figure(figsize=(8.0, 8.0),facecolor='lightgray')  # type: ignore[arg-type]
-fig.suptitle("Hus priser Bergen (per m2)", fontsize=20, y=0.95)
+fig = plt.figure(figsize=(8.0, 8.0), facecolor='white')  # type: ignore[arg-type]
 
 ax_map = fig.add_axes((0.4, 0.05, 0.50, .85))
-ax_radio_house_type = fig.add_axes((0.05, 0.75, 0.30, .15))
+ax_radio_house_type = fig.add_axes((0.05, 0.70, 0.30, .15))
 ax_radio_standard = fig.add_axes((0.05, 0.57, 0.30, .15))
+ax_radio_map = fig.add_axes((0.05, 0.90, 0.30, 0.08))
 ax_history = fig.add_axes((0.05, 0.05, 0.30, .50))
 ax_radio_house_type.set_facecolor('lightgray')
 ax_radio_standard.set_facecolor('lightgray')
+ax_radio_map.set_facecolor('lightgray')
 
 radio_button_category = RadioButtons(ax_radio_house_type, list(house_types.keys()))
 radio_button_standard = RadioButtons(ax_radio_standard, list(standard_types.keys()))
+radio_button_map = RadioButtons(ax_radio_map, list(maps.keys()))
 radio_button_category.on_clicked(on_house_type)
 radio_button_standard.on_clicked(on_standard)
-
-fig.subplots_adjust(left=0, right=1, top=1, bottom=0) # Adjust the figure to fit the image
+radio_button_map.on_clicked(on_map_type)
+fig.subplots_adjust(left=0, right=1, top=1, bottom=0)  # Adjust the figure to fit the image
 ax_map.margins(x=0.01, y=0.01)  # Adjust x and y margins
-img = mpimg.imread('Semester26_Bergen.jpg')
-ax_map.imshow(img, aspect='auto')
+
+
 
 draw_the_map()
 plt.connect('button_press_event', on_click_map)
