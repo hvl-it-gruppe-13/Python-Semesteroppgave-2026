@@ -7,7 +7,7 @@ from Semester26_Model import  predict_price
 def draw_the_map():
 
     ax_map.cla()
-    img = mpimg.imread(f"Semester26_{current_map}.jpg")
+    img = mpimg.imread(f"../img/Semester26_{current_map}.jpg")
     ax_map.imshow(img, extent=(0, 100, 0, 100), aspect='auto')
 
     fig.suptitle(f"Hus priser {current_map} (per m2)", fontsize=20, y=0.98, x=0.63)
