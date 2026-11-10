@@ -26,7 +26,16 @@ def draw_the_map():
 
     ax_map.text(x + 3, y - 1, price, color='blue', fontsize=15)
     ax_history.cla()
-    ax_history.bar(m2list, price_m2, color='blue', width=5)
+    if standard_type == 1:
+        farger = 'red'
+    elif standard_type == 2:
+        farger = 'yellow'
+    else:
+        farger = 'green'
+
+    ax_history.bar(m2list, price_m2, color=farger, width=5)
+    ax_history.axhline(y=price_m2[1], color='black', linestyle='--')
+    ax_history.grid(axis='y', linestyle=':', alpha=0.5)
     ax_history.legend(["pris per m2"])
 
     plt.draw()
