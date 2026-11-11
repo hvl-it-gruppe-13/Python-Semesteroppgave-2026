@@ -1,0 +1,84 @@
+Bergen:
+R-squared: 0.91
+MAE      : 979
+
+Oslo:
+R-squared: 0.89
+MAE      : 1010
+
+Stavanger:
+R-squared: 0.89
+MAE      : 1048
+
+Bergen:
+R-squared: 0.91
+MAE      : 979
+
+Oslo:
+R-squared: 0.89
+MAE      : 1010
+
+Stavanger:
+R-squared: 0.89
+MAE      : 1048
+
+Bergen:
+R-squared: 0.91
+MAE      : 979
+
+Oslo:
+R-squared: 0.89
+MAE      : 1010
+
+Stavanger:
+R-squared: 0.89
+MAE      : 1048
+
+Bergen:
+R-squared: 0.91
+MAE      : 979
+
+Oslo:
+R-squared: 0.89
+MAE      : 1010
+
+Stavanger:
+R-squared: 0.89
+MAE      : 1048
+
+Bergen:
+R-squared: 0.91
+MAE      : 979
+
+Oslo:
+R-squared: 0.89
+MAE      : 1010
+
+Stavanger:
+R-squared: 0.89
+MAE      : 1048
+
+Bergen:
+R-squared: 0.91
+MAE      : 979
+
+Oslo:
+R-squared: 0.89
+MAE      : 1010
+
+Stavanger:
+R-squared: 0.89
+MAE      : 1048
+
+Bergen:
+R-squared: 0.91
+MAE      : 979
+
+Oslo:
+R-squared: 0.89
+MAE      : 1010
+
+Stavanger:
+R-squared: 0.89
+MAE      : 1048
+
