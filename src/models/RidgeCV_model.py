@@ -10,13 +10,14 @@ from sklearn.pipeline import make_pipeline
 
 class RidgeCV_model:
     def __init__(self, city):
+        self.city = city
         self.csv_file = f"prices/House_Prices_{city}.csv"
         self.y_columns=["x","y","m2","house_type","standard"]
         self.pipeline = make_pipeline(PolynomialFeatures(degree=3),
                                       StandardScaler(),
                                       Ridge(alpha=.1),)
 
-        self.fitted = False
+        self.build_and_train_model()
 
     def build_and_train_model(self):
         df:DataFrame = pd.read_csv(self.csv_file)
@@ -30,20 +31,18 @@ class RidgeCV_model:
         x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.25, random_state=42)
 
         self.pipeline.fit(x_train, y_train)
-        self.fitted = True
         y_pred = self.pipeline.predict(x_test).astype(int)
 
         # Check model quality
         l_test:list[int] = y_test.tolist()
         l_pred:list[int] = y_pred.tolist()
-        for i in range(0, min(len(l_test),10)):
-            print(f"Price: {l_test[i]:>10,.0f}  Predicted: {l_pred[i]:>10,.0f}")
-        print(f"R-squared: {r2_score(y_test, y_pred):.2f}")
-        print(f"MAE      : {mean_absolute_error(y_test, y_pred):.0f}")
+        for i in range(0, min(len(l_test), 10)):
+            print_to_doc("price_pred_RidgeCV", f"Price: {l_test[i]:>10,.0f}  Predicted: {l_pred[i]:>10,.0f}\n")
+        print_to_doc("result_RidgeCV", self.city + ":\n")
+        print_to_doc("result_RidgeCV", f"R-squared: {r2_score(y_test, y_pred):.2f}\n")
+        print_to_doc("result_RidgeCV", f"MAE      : {mean_absolute_error(y_test, y_pred):.0f}\n\n")
 
     def predict_price(self, x, y, m2:int,house_type, standard) -> float:
-        if not self.fitted:
-            raise RuntimeError("Model is not fitted yet")
         # Build a single sample
         x_house = pd.DataFrame([[x, y,m2,house_type,standard]],columns=self.y_columns)
         x_house['x2'] = x_house['x']**1.5 # Weith position more.
@@ -53,3 +52,6 @@ class RidgeCV_model:
 
 
 
+def print_to_doc(fil, s):
+    with open(f"../doc/RidgeCV/{fil}.txt", "a") as f:
+        f.write(s)
