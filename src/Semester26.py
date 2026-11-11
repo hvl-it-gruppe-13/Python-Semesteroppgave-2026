@@ -2,23 +2,23 @@
 import matplotlib.pyplot as plt
 from matplotlib.widgets import RadioButtons
 import matplotlib.image as mpimg
-from models.LinearReg_model import LR_model
-from models.Ridge_model import Ridge_model
-from models.RidgeCV_model import RidgeCV_model
+from models.LinearReg_model import LRModel
+from models.Ridge_model import RidgeModel
+from models.RidgeCV_model import RidgeCVModel
 
 #Modeller
 
-LR_bergen = LR_model("Bergen")
-Ridge_bergen = Ridge_model("Bergen")
-RidgeCV_bergen = RidgeCV_model("Bergen")
+LR_bergen = LRModel("Bergen")
+Ridge_bergen = RidgeModel("Bergen")
+RidgeCV_bergen = RidgeCVModel("Bergen")
 
-LR_oslo = LR_model("Oslo")
-Ridge_oslo = Ridge_model("Oslo")
-RidgeCV_oslo = RidgeCV_model("Oslo")
+LR_oslo = LRModel("Oslo")
+Ridge_oslo = RidgeModel("Oslo")
+RidgeCV_oslo = RidgeCVModel("Oslo")
 
-LR_stavanger = LR_model("Stavanger")
-Ridge_stavanger = Ridge_model("Stavanger")
-RidgeCV_stavanger = RidgeCV_model("Stavanger")
+LR_stavanger = LRModel("Stavanger")
+Ridge_stavanger = RidgeModel("Stavanger")
+RidgeCV_stavanger = RidgeCVModel("Stavanger")
 
 
 def draw_the_map():

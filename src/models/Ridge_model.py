@@ -8,7 +8,7 @@ from sklearn.linear_model import LinearRegression, Ridge, RidgeCV
 from sklearn.metrics import r2_score, mean_absolute_error
 from sklearn.pipeline import make_pipeline
 
-class Ridge_model:
+class RidgeModel:
     def __init__(self, city):
         self.city = city
         self.csv_file = f"prices/House_Prices_{city}.csv"
