@@ -19,7 +19,7 @@ def draw_the_map():
         return
 
     m2_price:float = predict_price(x, y, m2, house_type, standard_type) / m2
-    price = f"{round(m2_price * 1000, -2):,.0f}"
+    price = f"{round(m2_price * 1000, -2):,.0f} kr/m2"
 
     m2list = [50,100,150,200]
     price_m2 = [predict_price(x, y,  _m2, house_type, standard_type)/_m2 for _m2 in m2list]
@@ -36,7 +36,9 @@ def draw_the_map():
     ax_history.bar(m2list, price_m2, color=farger, width=5)
     ax_history.axhline(y=price_m2[1], color='black', linestyle='--')
     ax_history.grid(axis='y', linestyle=':', alpha=0.5)
-    ax_history.legend(["pris per m2"])
+    ax_history.set_ylabel("Estimert pris per m2 (1000 kr)")
+    ax_history.set_xlabel("Boligstørrelse (m2)")
+    ax_history.legend(["Kvadratmeterpris ved 100 m2"], loc = "lower center", bbox_to_anchor=(0.7, 1.0))
 
     plt.draw()
 
@@ -97,7 +99,7 @@ ax_map = fig.add_axes((0.4, 0.05, 0.50, .85))
 ax_radio_house_type = fig.add_axes((0.05, 0.70, 0.30, .15))
 ax_radio_standard = fig.add_axes((0.05, 0.57, 0.30, .15))
 ax_radio_map = fig.add_axes((0.05, 0.90, 0.30, 0.08))
-ax_history = fig.add_axes((0.05, 0.05, 0.30, .50))
+ax_history = fig.add_axes((0.05, 0.05, 0.30, .40))
 ax_radio_house_type.set_facecolor('lightgray')
 ax_radio_standard.set_facecolor('lightgray')
 ax_radio_map.set_facecolor('lightgray')
