@@ -2,7 +2,7 @@
 import matplotlib.pyplot as plt
 from matplotlib.widgets import RadioButtons
 import matplotlib.image as mpimg
-from Semester26_Model import  predict_price
+from models.LinearReg_model import  predict_price
 
 def draw_the_map():
 
