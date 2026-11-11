@@ -2,7 +2,19 @@
 import matplotlib.pyplot as plt
 from matplotlib.widgets import RadioButtons
 import matplotlib.image as mpimg
-from Semester26_Model import  predict_price
+from models.LinearReg_model import LR_model
+from models.Ridge_model import Ridge_model
+from models.RidgeCV_model import RidgeCV_model
+
+LR_bergen = LR_model("Bergen")
+LR_bergen.build_and_train_model()
+
+LR_oslo = LR_model("Oslo")
+LR_oslo.build_and_train_model()
+
+LR_stavanger = LR_model("Stavanger")
+LR_stavanger.build_and_train_model()
+
 
 def draw_the_map():
 
@@ -18,11 +30,29 @@ def draw_the_map():
     if marked_point == (0, 0):
         return
 
-    m2_price:float = predict_price(x, y, m2, house_type, standard_type) / m2
-    price = f"{round(m2_price * 1000, -2):,.0f}"
+    price = 0
+    m2list = [50, 100, 150, 200]
+    price_m2 = 0
 
-    m2list = [50,100,150,200]
-    price_m2 = [predict_price(x, y,  _m2, house_type, standard_type)/_m2 for _m2 in m2list]
+    match current_map:
+        case 'Bergen':
+            m2_price: float = LR_bergen.predict_price(x, y, m2, house_type, standard_type) / m2
+            price = f"{round(m2_price * 1000, -2):,.0f}"
+
+            price_m2 = [LR_bergen.predict_price(x, y, _m2, house_type, standard_type) / _m2 for _m2 in m2list]
+
+        case 'Stavanger':
+            m2_price: float = LR_stavanger.predict_price(x, y, m2, house_type, standard_type) / m2
+            price = f"{round(m2_price * 1000, -2):,.0f}"
+
+            price_m2 = [LR_stavanger.predict_price(x, y, _m2, house_type, standard_type) / _m2 for _m2 in m2list]
+
+        case 'Oslo':
+            m2_price: float = LR_oslo.predict_price(x, y, m2, house_type, standard_type) / m2
+            price = f"{round(m2_price * 1000, -2):,.0f}"
+
+            price_m2 = [LR_oslo.predict_price(x, y, _m2, house_type, standard_type) / _m2 for _m2 in m2list]
+
 
     ax_map.text(x + 3, y - 1, price, color='blue', fontsize=15)
     ax_history.cla()
