@@ -60,13 +60,18 @@ def draw_the_map():
         farger = 'red'
     elif standard_type == 2:
         farger = 'yellow'
-    else:
+    elif standard_type == 3:
         farger = 'green'
+    else:
+        farger = 'darkgreen'
 
     ax_history.bar(m2list, price_m2, color=farger, width=5)
     ax_history.axhline(y=price_m2[1], color='black', linestyle='--')
     ax_history.grid(axis='y', linestyle=':', alpha=0.5)
-    ax_history.legend(["pris per m2"])
+    ax_history.set_ylabel("Estimert pris per m2 (1000 kr)")
+    ax_history.set_xlabel("Boligstørrelse (m2)")
+    ax_history.legend(["Kvadratmeterpris ved 100 m2"], loc="lower center", bbox_to_anchor=(0.7, 1.0))
+
 
     plt.draw()
 
