@@ -303,7 +303,42 @@ def draw_the_map():
     ax_history.set_ylabel("Estimert pris per m² (1000 kr)")
     ax_history.set_xlabel("Boligstørrelse (m²)")
     ax_history.set_xticks([50, 100, 150, 200])
+    ax_history.set_facecolor("#FFFFFF")
 
+    ax_history.set_title(
+        "ESTIMERTE BOLIGPRISER",
+        fontsize=12,
+        fontweight="bold",
+        color="#344E41",
+        pad=15
+    )
+
+    ax_history.grid(
+        axis="y",
+        linestyle="--",
+        alpha=0.2
+    )
+
+    ax_history.set_axisbelow(True)
+
+    for kant in ax_history.spines.values():
+        kant.set_visible(False)
+
+
+        ramme_graf = FancyBboxPatch(
+            (0, 0),
+            1.,
+            1.,
+            boxstyle="round,pad=0.01,rounding_size=0.03",
+            transform=ax_history.transAxes,
+            facecolor="none",
+            edgecolor="#B8BEC5",
+            linewidth=1.5,
+            clip_on=False,
+            zorder=10
+        )
+
+        ax_history.add_patch(ramme_graf)
     fig.canvas.draw_idle()
 
 
@@ -356,10 +391,18 @@ def on_click_map(event):
 
 
 # Figure and axes
-fig = plt.figure(figsize=(14, 10), facecolor="#F4F6F8")
+fig = plt.figure(figsize=(15, 10), facecolor="#F7F5F0")
+
+fig.suptitle(
+    "BOLIGPRISKALKULATOR",
+    fontsize=24,
+    fontweight="bold",
+    color="#344E41",
+    y=0.98
+)
 
 ax_map = fig.add_axes([0.37, 0.07, 0.35, 0.84])
-ax_history = fig.add_axes([0.07, 0.07, 0.23, 0.5])
+ax_history = fig.add_axes([0.07, 0.25, 0.23, 0.60])
 
 ax_radio_map = fig.add_axes(
     [0.77, 0.84, 0.20, 0.10],
@@ -378,6 +421,32 @@ ax_radio_model = fig.add_axes(
     facecolor="white",
 )
 
+from matplotlib.patches import FancyBboxPatch
+
+for ax in [
+    ax_radio_map,
+    ax_radio_house_type,
+    ax_radio_standard,
+    ax_radio_model
+]:
+    for kant in ax.spines.values():
+        kant.set_visible(False)
+
+    ax.set_facecolor("none")
+
+    ramme = FancyBboxPatch(
+        (0, 0), 1, 1,
+        boxstyle="round,pad=0.02,rounding_size=0.06",
+        transform=ax.transAxes,
+        facecolor="white",
+        edgecolor="#D9E2DC",
+        linewidth=1.5,
+        clip_on=False,
+        zorder=-1
+    )
+
+    ax.add_patch(ramme)
+
 # Radio-button controls
 radio_button_map = RadioButtons(ax_radio_map, list(BYER.keys()))
 radio_button_house_type = RadioButtons(
@@ -392,11 +461,37 @@ radio_button_model = RadioButtons(
     ax_radio_model,
     model_names,
 )
+radio_button_model = RadioButtons(
+    ax_radio_model,
+    model_names,
+)
+
+for radio in [
+    radio_button_map,
+    radio_button_house_type,
+    radio_button_standard,
+    radio_button_model
+]:
+    radio.set_radio_props(
+        props={"facecolor": "#344E41",
+               "edgecolor": "#344E41"}
+    )
+
 
 radio_button_map.on_clicked(on_map_type)
 radio_button_house_type.on_clicked(on_house_type)
 radio_button_standard.on_clicked(on_standard)
 radio_button_model.on_clicked(on_model_type)
+
+for radio in [
+    radio_button_map,
+    radio_button_house_type,
+    radio_button_standard,
+    radio_button_model
+]:
+    for tekst in radio.labels:
+        tekst.set_fontsize(10)
+        tekst.set_color("#344E41")
 
 fig.canvas.mpl_connect("button_press_event", on_click_map)
 
